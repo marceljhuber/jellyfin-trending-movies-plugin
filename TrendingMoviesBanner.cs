@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
+using Jellyfin.Data.Enums;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
 using MediaBrowser.Controller.Entities;
@@ -70,7 +70,7 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner
                 // Get all movies from Jellyfin library
                 var jellyfinMovies = _libraryManager.GetItemList(new InternalItemsQuery
                 {
-                    IncludeItemTypes = new[] { nameof(Movie) },
+                    IncludeItemTypes = new[] { BaseItemKind.Movie },
                     IsVirtualItem = false,
                     Recursive = true
                 }).ToList();

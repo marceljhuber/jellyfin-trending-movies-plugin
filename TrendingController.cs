@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Jellyfin.Data.Enums;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Model.Dto;
@@ -38,9 +41,8 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
                 {
                     Id = movie.Id,
                     Name = movie.Name,
-                    ServerId = movie.InternalId.ToString(),
-                    Type = movie.GetType().Name,
-                    ImageTags = movie.ImageInfos.ToDictionary(i => i.Type.ToString(), i => Guid.NewGuid().ToString())
+                    ServerId = movie.Id.ToString(),
+                    Type = BaseItemKind.Movie
                 });
             }
 
@@ -50,10 +52,9 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
         [HttpGet("script")]
         public ContentResult GetClientScript()
         {
-            var script = @"
-(function() {
+            var script = @"(function() {
     const CACHE_KEY = 'trendingMoviesBanner';
-    const CACHE_DURATION = 3600000; // 1 hour
+    const CACHE_DURATION = 3600000;
 
     async function fetchTrendingMovies() {
         try {
@@ -77,61 +78,42 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
         const homePage = document.querySelector('.homePage');
         if (!homePage) return;
 
-        // Remove existing banner
         const existingBanner = document.getElementById('trending-movies-banner');
         if (existingBanner) existingBanner.remove();
 
         const banner = document.createElement('div');
         banner.id = 'trending-movies-banner';
-        banner.style.cssText = `
-            width: 100%;
-            height: 400px;
-            position: relative;
-            overflow: hidden;
-            margin: 20px 0;
-            border-radius: 8px;
-        `;
+        banner.style.cssText = 'width: 100%; height: 400px; position: relative; overflow: hidden; margin: 20px 0; border-radius: 8px;';
 
         const slider = document.createElement('div');
-        slider.style.cssText = `
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 100%;
-        `;
+        slider.style.cssText = 'display: flex; transition: transform 0.5s ease; height: 100%;';
 
         movies.slice(0, 10).forEach((movie, index) => {
             const slide = document.createElement('div');
-            slide.style.cssText = `
-                min-width: 100%;
-                height: 100%;
-                position: relative;
-                background: linear-gradient(to right, rgba(0,0,0,0.8), transparent),
-                            url('${ApiClient.getImageUrl(movie.Id, {
-                                type: 'Backdrop',
-                                maxWidth: 1920
-                            })}');
-                background-size: cover;
-                background-position: center;
-                display: flex;
-                align-items: center;
-                padding: 40px;
-                cursor: pointer;
-            `;
+            const backdropUrl = ApiClient.getImageUrl(movie.Id, { type: 'Backdrop', maxWidth: 1920 });
+            slide.style.cssText = 'min-width: 100%; height: 100%; position: relative; background: linear-gradient(to right, rgba(0,0,0,0.8), transparent), url(' + backdropUrl + '); background-size: cover; background-position: center; display: flex; align-items: center; padding: 40px; cursor: pointer;';
 
-            slide.innerHTML = `
-                <div style='max-width: 600px; color: white;'>
-                    <h2 style='font-size: 2.5em; margin: 0 0 10px 0;'>${movie.Name}</h2>
-                    <div style='margin-top: 20px;'>
-                        <button style='padding: 12px 30px; font-size: 1.1em; background: #00a4dc; 
-                                       border: none; border-radius: 4px; color: white; cursor: pointer;'>
-                            Play Now
-                        </button>
-                    </div>
-                </div>
-            `;
+            const content = document.createElement('div');
+            content.style.cssText = 'max-width: 600px; color: white;';
+            
+            const title = document.createElement('h2');
+            title.style.cssText = 'font-size: 2.5em; margin: 0 0 10px 0;';
+            title.textContent = movie.Name;
+            
+            const buttonContainer = document.createElement('div');
+            buttonContainer.style.cssText = 'margin-top: 20px;';
+            
+            const playButton = document.createElement('button');
+            playButton.style.cssText = 'padding: 12px 30px; font-size: 1.1em; background: #00a4dc; border: none; border-radius: 4px; color: white; cursor: pointer;';
+            playButton.textContent = 'Play Now';
+            
+            buttonContainer.appendChild(playButton);
+            content.appendChild(title);
+            content.appendChild(buttonContainer);
+            slide.appendChild(content);
 
-            slide.addEventListener('click', () => {
-                window.location.href = `#!/details?id=${movie.Id}`;
+            slide.addEventListener('click', function() {
+                window.location.href = '#!/details?id=' + movie.Id;
             });
 
             slider.appendChild(slide);
@@ -139,27 +121,25 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
 
         banner.appendChild(slider);
 
-        // Add navigation
         if (movies.length > 1) {
             let currentIndex = 0;
             
-            const prevBtn = createNavButton('❮', () => {
+            const prevBtn = createNavButton('<', function() {
                 currentIndex = (currentIndex - 1 + movies.length) % movies.length;
-                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                slider.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
             });
             
-            const nextBtn = createNavButton('❯', () => {
+            const nextBtn = createNavButton('>', function() {
                 currentIndex = (currentIndex + 1) % movies.length;
-                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                slider.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
             });
 
             banner.appendChild(prevBtn);
             banner.appendChild(nextBtn);
 
-            // Auto-advance
-            setInterval(() => {
+            setInterval(function() {
                 currentIndex = (currentIndex + 1) % movies.length;
-                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                slider.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
             }, 5000);
         }
 
@@ -169,24 +149,12 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
     function createNavButton(text, onClick) {
         const btn = document.createElement('button');
         btn.textContent = text;
-        btn.style.cssText = `
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            font-size: 2em;
-            padding: 10px 20px;
-            cursor: pointer;
-            z-index: 10;
-        `;
-        btn.style[text === '❮' ? 'left' : 'right'] = '20px';
+        btn.style.cssText = 'position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; font-size: 2em; padding: 10px 20px; cursor: pointer; z-index: 10;';
+        btn.style[text === '<' ? 'left' : 'right'] = '20px';
         btn.addEventListener('click', onClick);
         return btn;
     }
 
-    // Initialize
     document.addEventListener('viewshow', async function(e) {
         if (e.detail.type === 'home') {
             const cached = localStorage.getItem(CACHE_KEY);
@@ -204,8 +172,8 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
             }
         }
     });
-})();
-";
+})();";
+            
             return Content(script, "application/javascript");
         }
     }

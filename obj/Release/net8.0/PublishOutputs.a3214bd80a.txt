@@ -1,0 +1,17 @@
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Jellyfin.Plugin.TrendingMoviesBanner.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Jellyfin.Plugin.TrendingMoviesBanner.deps.json
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Jellyfin.Plugin.TrendingMoviesBanner.pdb
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Diacritics.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\ICU4N.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\ICU4N.Transliterator.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\J2N.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\MediaBrowser.Common.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\MediaBrowser.Controller.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Jellyfin.Data.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Jellyfin.Extensions.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\MediaBrowser.Model.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Emby.Naming.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Microsoft.Extensions.Configuration.Binder.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\publish\Newtonsoft.Json.dll
