@@ -1,0 +1,20 @@
+[
+  {
+    "category": "General",
+    "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Trending Movies Banner",
+    "description": "Displays top 10 trending movies from TMDb as a banner on the Jellyfin home page",
+    "owner": "marceljhuber",
+    "overview": "Shows trending movies from TMDb that match your library",
+    "versions": [
+      {
+        "version": "1.0.0.0",
+        "changelog": "Initial release with TMDb integration",
+        "targetAbi": "10.9.0.0",
+        "sourceUrl": "https://github.com/marceljhuber/jellyfin-trending-movies-plugin/archive/refs/tags/v1.0.0.zip",
+        "checksum": "YOUR_MD5_HASH_HERE",
+        "timestamp": "2025-10-04 00:00:00"
+      }
+    ]
+  }
+]
