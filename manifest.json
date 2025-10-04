@@ -12,7 +12,7 @@
         "changelog": "Initial release with TMDb integration",
         "targetAbi": "10.9.0.0",
         "sourceUrl": "https://github.com/marceljhuber/jellyfin-trending-movies-plugin/archive/refs/tags/v1.0.0.zip",
-        "checksum": "8CB9355F326E2735C6BE17C50C48BE90",
+        "checksum": "628B8533E143F84321D409852BD3589D",
         "timestamp": "2025-10-04 00:00:00"
       }
     ]
