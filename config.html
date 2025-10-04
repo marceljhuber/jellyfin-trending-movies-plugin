@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trending Movies Banner</title>
+</head>
+<body>
+    <div id="TrendingMoviesBannerConfigPage">
+        <div>
+            <h2>Trending Movies Banner Configuration</h2>
+            <div class="inputContainer">
+                <label for="tmdbApiKey">TMDb API Key:</label>
+                <input type="text" id="tmdbApiKey" name="tmdbApiKey" />
+                <div class="fieldDescription">
+                    Get your free API key from <a href="https://www.themoviedb.org/settings/api" target="_blank">TMDb</a>
+                </div>
+            </div>
+            <div class="inputContainer">
+                <label for="topMoviesCount">Number of Trending Movies:</label>
+                <input type="number" id="topMoviesCount" name="topMoviesCount" min="5" max="20" />
+            </div>
+            <div class="inputContainer">
+                <label for="refreshInterval">Refresh Interval (hours):</label>
+                <input type="number" id="refreshInterval" name="refreshInterval" min="1" max="168" />
+            </div>
+            <button type="button" onclick="saveConfig()">Save</button>
+        </div>
+    </div>
+
+    <script>
+        const TrendingMoviesBannerConfig = {
+            pluginId: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+            
+            loadConfig: function() {
+                ApiClient.getPluginConfiguration(this.pluginId).then(function(config) {
+                    document.getElementById('tmdbApiKey').value = config.TmdbApiKey || '';
+                    document.getElementById('topMoviesCount').value = config.TopMoviesCount || 10;
+                    document.getElementById('refreshInterval').value = config.RefreshIntervalHours || 24;
+                });
+            },
+            
+            saveConfig: function() {
+                ApiClient.getPluginConfiguration(this.pluginId).then(function(config) {
+                    config.TmdbApiKey = document.getElementById('tmdbApiKey').value;
+                    config.TopMoviesCount = parseInt(document.getElementById('topMoviesCount').value);
+                    config.RefreshIntervalHours = parseInt(document.getElementById('refreshInterval').value);
+                    
+                    ApiClient.updatePluginConfiguration(TrendingMoviesBannerConfig.pluginId, config).then(function() {
+                        Dashboard.alert('Settings saved!');
+                    });
+                });
+            }
+        };
+
+        function saveConfig() {
+            TrendingMoviesBannerConfig.saveConfig();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            TrendingMoviesBannerConfig.loadConfig();
+        });
+    </script>
+</body>
+</html>
