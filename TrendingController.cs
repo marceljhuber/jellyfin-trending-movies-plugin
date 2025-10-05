@@ -59,9 +59,11 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
 
     async function fetchTrendingMovies() {
         try {
-            const response = await fetch('/TrendingMoviesBanner/movies', {
+            const serverUrl = window.location.origin;
+            const token = ApiClient.accessToken();
+            const response = await window.fetch(serverUrl + '/TrendingMoviesBanner/movies', {
                 headers: {
-                    'X-Emby-Token': ApiClient.accessToken()
+                    'X-Emby-Token': token
                 }
             });
 
