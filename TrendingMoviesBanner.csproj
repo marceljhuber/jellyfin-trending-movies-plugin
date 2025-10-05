@@ -3,6 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>Jellyfin.Plugin.TrendingMoviesBanner</AssemblyName>
     <RootNamespace>Jellyfin.Plugin.TrendingMoviesBanner</RootNamespace>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Configuration\*.html" />
+    <EmbeddedResource Include="Configuration\config.html" />
   </ItemGroup>
 </Project>
