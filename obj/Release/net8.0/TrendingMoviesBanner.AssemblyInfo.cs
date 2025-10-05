@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Jellyfin.Plugin.TrendingMoviesBanner")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f15003ac7a960795b27e8e004799ed320084dfa4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10aebc3483ed61f521ab62cb2067ffb22a83ef2c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Jellyfin.Plugin.TrendingMoviesBanner")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Jellyfin.Plugin.TrendingMoviesBanner")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

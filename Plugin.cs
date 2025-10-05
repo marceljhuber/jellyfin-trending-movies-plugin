@@ -8,13 +8,12 @@ using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Library;
-using MediaBrowser.Model.Plugins;
 using MediaBrowser.Model.Serialization;
 using Newtonsoft.Json;
 
 namespace Jellyfin.Plugin.TrendingMoviesBanner
 {
-    public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
+    public class Plugin : BasePlugin<PluginConfiguration>
     {
         private readonly ILibraryManager _libraryManager;
         private static readonly HttpClient _httpClient = new HttpClient();
@@ -33,17 +32,7 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner
         public override Guid Id => Guid.Parse("a1b2c3d4-e5f6-7890-abcd-ef1234567890");
         public static Plugin Instance { get; private set; }
 
-        public IEnumerable<PluginPageInfo> GetPages()
-        {
-            return new[]
-            {
-                new PluginPageInfo
-                {
-                    Name = "TrendingMoviesBannerConfigPage",
-                    EmbeddedResourcePath = "Jellyfin.Plugin.TrendingMoviesBanner.Configuration.config.html"
-                }
-            };
-        }
+        public override string Description => "Configure via XML file at: /config/data/plugins/configurations/Jellyfin.Plugin.TrendingMoviesBanner.xml - Add your TMDb API key there.";
 
         public async Task<List<BaseItem>> GetTrendingMoviesInLibrary(int topCount = 10)
         {
@@ -139,11 +128,5 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner
         
         [JsonProperty("release_date")]
         public string ReleaseDate { get; set; }
-        
-        [JsonProperty("poster_path")]
-        public string PosterPath { get; set; }
-        
-        [JsonProperty("backdrop_path")]
-        public string BackdropPath { get; set; }
     }
 }
