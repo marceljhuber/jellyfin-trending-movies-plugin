@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,8 +32,8 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
                 return NotFound();
             }
 
-            var movies = await plugin.GetTrendingMoviesInLibrary(plugin.Configuration.TopMoviesCount);
-            
+            var movies = await plugin.GetTrendingMoviesInLibrary(_libraryManager, plugin.Configuration.TopMoviesCount);
+
             var dtos = new List<BaseItemDto>();
             foreach (var movie in movies)
             {
@@ -63,7 +63,7 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
                     'X-Emby-Token': ApiClient.accessToken()
                 }
             });
-            
+
             if (!response.ok) return [];
             return await response.json();
         } catch (error) {
@@ -95,18 +95,18 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
 
             const content = document.createElement('div');
             content.style.cssText = 'max-width: 600px; color: white;';
-            
+
             const title = document.createElement('h2');
             title.style.cssText = 'font-size: 2.5em; margin: 0 0 10px 0;';
             title.textContent = movie.Name;
-            
+
             const buttonContainer = document.createElement('div');
             buttonContainer.style.cssText = 'margin-top: 20px;';
-            
+
             const playButton = document.createElement('button');
             playButton.style.cssText = 'padding: 12px 30px; font-size: 1.1em; background: #00a4dc; border: none; border-radius: 4px; color: white; cursor: pointer;';
             playButton.textContent = 'Play Now';
-            
+
             buttonContainer.appendChild(playButton);
             content.appendChild(title);
             content.appendChild(buttonContainer);
@@ -123,12 +123,12 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
 
         if (movies.length > 1) {
             let currentIndex = 0;
-            
+
             const prevBtn = createNavButton('<', function() {
                 currentIndex = (currentIndex - 1 + movies.length) % movies.length;
                 slider.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
             });
-            
+
             const nextBtn = createNavButton('>', function() {
                 currentIndex = (currentIndex + 1) % movies.length;
                 slider.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
@@ -159,7 +159,7 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
         if (e.detail.type === 'home') {
             const cached = localStorage.getItem(CACHE_KEY);
             const cacheTime = localStorage.getItem(CACHE_KEY + '_time');
-            
+
             if (cached && cacheTime && Date.now() - parseInt(cacheTime) < CACHE_DURATION) {
                 createBanner(JSON.parse(cached));
             } else {
@@ -173,7 +173,7 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
         }
     });
 })();";
-            
+
             return Content(script, "application/javascript");
         }
     }

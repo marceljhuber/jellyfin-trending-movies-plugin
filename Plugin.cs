@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Jellyfin.Data.Enums;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
+using MediaBrowser.Controller;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Model.Serialization;
@@ -15,16 +16,13 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner
 {
     public class Plugin : BasePlugin<PluginConfiguration>
     {
-        private readonly ILibraryManager _libraryManager;
         private static readonly HttpClient _httpClient = new HttpClient();
         
         public Plugin(
             IApplicationPaths applicationPaths, 
-            IXmlSerializer xmlSerializer,
-            ILibraryManager libraryManager
+            IXmlSerializer xmlSerializer
         ) : base(applicationPaths, xmlSerializer)
         {
-            _libraryManager = libraryManager;
             Instance = this;
         }
 
@@ -32,9 +30,7 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner
         public override Guid Id => Guid.Parse("a1b2c3d4-e5f6-7890-abcd-ef1234567890");
         public static Plugin Instance { get; private set; }
 
-        public override string Description => "Configure via XML file at: /config/data/plugins/configurations/Jellyfin.Plugin.TrendingMoviesBanner.xml - Add your TMDb API key there.";
-
-        public async Task<List<BaseItem>> GetTrendingMoviesInLibrary(int topCount = 10)
+        public async Task<List<BaseItem>> GetTrendingMoviesInLibrary(ILibraryManager libraryManager, int topCount = 10)
         {
             try
             {
@@ -53,7 +49,7 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner
                     return new List<BaseItem>();
                 }
 
-                var jellyfinMovies = _libraryManager.GetItemList(new InternalItemsQuery
+                var jellyfinMovies = libraryManager.GetItemList(new InternalItemsQuery
                 {
                     IncludeItemTypes = new[] { BaseItemKind.Movie },
                     IsVirtualItem = false,
