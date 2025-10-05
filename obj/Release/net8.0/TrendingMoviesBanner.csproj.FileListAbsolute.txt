@@ -1,12 +1,12 @@
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\Jellyfin.Plugin.TrendingMoviesBanner.deps.json
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\Jellyfin.Plugin.TrendingMoviesBanner.dll
+D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\Jellyfin.Plugin.TrendingMoviesBanner.pdb
 D:\Git-Repositories\jellyfin-trending-movies-plugin\obj\Release\net8.0\TrendingMoviesBanner.csproj.AssemblyReference.cache
 D:\Git-Repositories\jellyfin-trending-movies-plugin\obj\Release\net8.0\TrendingMoviesBanner.GeneratedMSBuildEditorConfig.editorconfig
 D:\Git-Repositories\jellyfin-trending-movies-plugin\obj\Release\net8.0\TrendingMoviesBanner.AssemblyInfoInputs.cache
 D:\Git-Repositories\jellyfin-trending-movies-plugin\obj\Release\net8.0\TrendingMoviesBanner.AssemblyInfo.cs
 D:\Git-Repositories\jellyfin-trending-movies-plugin\obj\Release\net8.0\TrendingMoviesBanner.csproj.CoreCompileInputs.cache
 D:\Git-Repositories\jellyfin-trending-movies-plugin\obj\Release\net8.0\TrendingMoviesBanner.sourcelink.json
-D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\Jellyfin.Plugin.TrendingMoviesBanner.deps.json
-D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\Jellyfin.Plugin.TrendingMoviesBanner.dll
-D:\Git-Repositories\jellyfin-trending-movies-plugin\bin\Release\net8.0\Jellyfin.Plugin.TrendingMoviesBanner.pdb
 D:\Git-Repositories\jellyfin-trending-movies-plugin\obj\Release\net8.0\Jellyfin.Plugin.TrendingMoviesBanner.dll
 D:\Git-Repositories\jellyfin-trending-movies-plugin\obj\Release\net8.0\refint\Jellyfin.Plugin.TrendingMoviesBanner.dll
 D:\Git-Repositories\jellyfin-trending-movies-plugin\obj\Release\net8.0\Jellyfin.Plugin.TrendingMoviesBanner.pdb
