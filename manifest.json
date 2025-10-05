@@ -3,16 +3,16 @@
     "category": "General",
     "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
     "name": "Trending Movies Banner",
-    "description": "Displays top 10 trending movies from TMDb as a banner on the Jellyfin home page",
+    "description": "Displays top 10 trending movies from TMDb as a banner on the Jellyfin home page. Configure via XML file.",
     "owner": "marceljhuber",
-    "overview": "Shows trending movies from TMDb that match your library",
+    "overview": "Shows trending movies from TMDb that match your library. Manual configuration via XML file.",
     "versions": [
       {
-        "version": "1.0.3.0",
-        "changelog": "Fixed configuration page loading issue",
+        "version": "1.0.4.0",
+        "changelog": "Removed web config page, use manual XML configuration instead",
         "targetAbi": "10.9.0.0",
-        "sourceUrl": "https://github.com/marceljhuber/jellyfin-trending-movies-plugin/releases/download/v1.0.3/trending-movies-banner-v1.0.3.zip",
-        "checksum": "53C9E8B3D38C2AFF293937CA4DBC9395",
+        "sourceUrl": "https://github.com/marceljhuber/jellyfin-trending-movies-plugin/releases/download/v1.0.4/trending-movies-banner-v1.0.4.zip",
+        "checksum": "3B604BB02C228FD432AD547A11E04848",
         "timestamp": "2025-10-05 12:00:00"
       }
     ]
