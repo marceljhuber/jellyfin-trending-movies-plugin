@@ -158,23 +158,45 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
         return btn;
     }
 
-    document.addEventListener('viewshow', async function(e) {
-        if (e.detail.type === 'home') {
-            const cached = localStorage.getItem(CACHE_KEY);
-            const cacheTime = localStorage.getItem(CACHE_KEY + '_time');
+    async function loadBanner() {
+        const cached = localStorage.getItem(CACHE_KEY);
+        const cacheTime = localStorage.getItem(CACHE_KEY + '_time');
 
-            if (cached && cacheTime && Date.now() - parseInt(cacheTime) < CACHE_DURATION) {
-                createBanner(JSON.parse(cached));
-            } else {
-                const movies = await fetchTrendingMovies();
-                if (movies.length > 0) {
-                    localStorage.setItem(CACHE_KEY, JSON.stringify(movies));
-                    localStorage.setItem(CACHE_KEY + '_time', Date.now().toString());
-                    createBanner(movies);
-                }
+        if (cached && cacheTime && Date.now() - parseInt(cacheTime) < CACHE_DURATION) {
+            createBanner(JSON.parse(cached));
+        } else {
+            const movies = await fetchTrendingMovies();
+            if (movies.length > 0) {
+                localStorage.setItem(CACHE_KEY, JSON.stringify(movies));
+                localStorage.setItem(CACHE_KEY + '_time', Date.now().toString());
+                createBanner(movies);
             }
         }
+    }
+
+    // Check if we're already on home page when script loads
+    function checkInitialPage() {
+        const homePage = document.querySelector('.homePage');
+        if (homePage) {
+            loadBanner();
+        }
+    }
+
+    // Listen for navigation to home page
+    document.addEventListener('viewshow', async function(e) {
+        if (e.detail.type === 'home') {
+            loadBanner();
+        }
     });
+
+    // Check immediately when script loads
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkInitialPage, 500);
+        });
+    } else {
+        setTimeout(checkInitialPage, 500);
+    }
 })();";
 
             return Content(script, "application/javascript");
