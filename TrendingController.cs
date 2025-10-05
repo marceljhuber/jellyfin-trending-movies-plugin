@@ -13,7 +13,6 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
 {
     [ApiController]
     [Route("TrendingMoviesBanner")]
-    [Authorize]
     public class TrendingController : ControllerBase
     {
         private readonly ILibraryManager _libraryManager;
@@ -24,6 +23,7 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
         }
 
         [HttpGet("movies")]
+        [Authorize]
         public async Task<ActionResult<List<BaseItemDto>>> GetTrendingMovies()
         {
             var plugin = Plugin.Instance;
@@ -50,6 +50,7 @@ namespace Jellyfin.Plugin.TrendingMoviesBanner.Api
         }
 
         [HttpGet("script")]
+        [AllowAnonymous]
         public ContentResult GetClientScript()
         {
             var script = @"(function() {
